@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Cards Overview</title>
+    <style>
+        body { font-family: sans-serif; margin: 2rem; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { padding: 0.5rem; border: 1px solid #ccc; }
+        th { background: #eee; }
+    </style>
+</head>
+<body>
+<h1>Registered Cards</h1>
+<table>
+    <thead>
+    <tr>
+        <th>UID</th>
+        <th>Created At</th>
+    </tr>
+    </thead>
+    <tbody id="cards-body">
+    <!-- Will be filled by script -->
+    </tbody>
+</table>
+
+<script>
+    async function loadCards() {
+        const res = await fetch('/cards');
+        const cards = await res.json();
+        const tbody = document.getElementById('cards-body');
+        tbody.innerHTML = cards.map(c =>
+            `<tr><td>${c.uid}</td><td>${c.created_at}</td></tr>`
+        ).join('');
+    }
+    loadCards();
+</script>
+</body>
+</html>
